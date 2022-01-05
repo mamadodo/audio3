@@ -11,3 +11,104 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a {
+  text-decoration: none;
+}
+
+.row700 {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* トップページ */
+.channelItem {
+  display: flex;
+  flex-direction: column;
+  width: 222px;
+  background: #fff;
+  padding: 16px 12px;
+  margin-right: 16px;
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 30%);
+}
+
+.channelItem__channelLink {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  transition: .4s;
+  margin-bottom: 10px;
+}
+
+.channelItem__channelLink__image {
+  width: 218px;
+  margin-bottom: 13px;
+}
+
+.channelItem__channelLink__image img {
+  width: 100%;
+  height: auto;
+}
+
+.chl-mvContainer__box__desc__title {
+  font-size: 20px;
+  margin: 0 0 20px;
+}
+
+.channelItem__channelLink__detail {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* program page */
+.chl-mvContainer__box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.chl-mvContainer__box img {
+  width: 200px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.allContents-list {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.allContents-list li {
+  width: 40%;
+  list-style: none;
+}
+
+.allContents-list li h2 {
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.addBtn {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 38px;
+  border-radius: 19px;
+  background: #c22c46;
+  color: #fff;
+  padding: 0 10px;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.addBtn span {
+  height: 100%;
+  line-height: 38px;
+}
