@@ -1,10 +1,9 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import programImg from "../radireki_thumbnail.jpeg";
 import { episodes } from "./episodes";
 
 export const Program = () => {
-  const arr = [...Array(100).keys()];
   return (
     <>
       <div id="container" className="chl-mvContainer row700">

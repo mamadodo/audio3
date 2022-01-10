@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Top } from "../components/Top";
 import { Program } from "../components/Program";
 import { Episode } from "../components/Episode";
@@ -10,9 +10,8 @@ export const Router = () => {
     <BrowserRouter>
       <div>
         <Routes>
-          <Route path="/" element={ <Top /> } />
+          <Route path="/" element={ <Top /> } component={Top} />
           <Route path="radiohistory">
-            {/* <Route path={episodes.epiNum} element={ <EpisodePage /> } /> */}
             <Route index element={ <Program /> } />
             <Route path=":id" element={ <Episode /> } />
           </Route>
