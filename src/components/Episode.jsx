@@ -43,13 +43,22 @@ export const Episode = memo(() => {
           console.log(stopTrack);
           console.log(trackIndex);
 
-          const playTracks = [...currentEpisode, ...tracks];
-          setTracks(playTracks);
-          setTrackIndex(0);
-          const currentTrack = playTracks[0];
-          // console.log(currentTrack);
-          currentTrack.playing = true;
-          setIsPlay(true);
+          // 重複チェック
+          if(tracks.some(el => el.title === currentEpisode[0].title)) {
+            const targetIndex = tracks.findIndex((v) => v.title === currentEpisode[0].title);
+            const currentTrack = tracks[targetIndex];
+            setTrackIndex(targetIndex);
+            currentTrack.playing = true;
+            setIsPlay(true);
+          } else {
+            const playTracks = [...currentEpisode, ...tracks];
+            setTracks(playTracks);
+            setTrackIndex(0);
+            const currentTrack = playTracks[0];
+            // console.log(currentTrack);
+            currentTrack.playing = true;
+            setIsPlay(true);
+          }
         }
         changeTrack();
       }
@@ -82,7 +91,7 @@ export const Episode = memo(() => {
 
   let currentPlayFlg = false;
   if(isPlay) {
-    if(tracks[0].title === state.title) {
+    if(tracks[trackIndex].title === state.title) {
       currentPlayFlg = true;
     } else {
       currentPlayFlg = false;

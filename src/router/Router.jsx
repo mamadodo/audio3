@@ -7,7 +7,7 @@ import { episodes } from "../components/episodes";
 
 export const Router = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <div>
         <Routes>
           <Route path="/" element={ <Top /> } component={Top} />
