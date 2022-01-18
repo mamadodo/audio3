@@ -1,0 +1,130 @@
+## git pagesへのビルド時の注意点
+ReactRouterで作成したホームページをgithub pagesで表示すると白紙になってしまう対応策
+
+### Router.jsx
+<BrouserRouter>にbasename設定を追加
+```
+<BrowserRouter basename={process.env.PUBLIC_URL}>
+```
+
+### package.json
+homepageにpagesのURLを設定
+```
+  "homepage": "https://mamadodo.github.io/audio3/",
+```
+
+### 手順
+gitpagesにdeployするときは、上記のファイルに変更してからbuildとdeployを実行する
+(ローカルでみたい時は、通常にもどして再build)
+
+npm run build
+npm run deploy
+
+
+### 参考URL
+https://elsammit-beginnerblg.hatenablog.com/entry/2020/10/22/224710
+
+
+# 2022/01/13
+## ロードマップ５  →1/19に現状報告
+1. Json Generator でデータ作成
+https://app.json-generator.com/
+
+Generateしたら、GetDataからDataURLを取得
+※author tokenが必要
+例)
+https://api.json-generator.com/templates/hGizAHYNPIIU/data?access_token=6a76lvuqp3cwnx944w7p5w2e1mv7v7puos3rn15p
+
+※ テキストデータ以外の（img/mp3）はローカルから追加
+
+2. ダミーデータ取得にはaxiosを使用
+
+## ロードマップ６
+Redux useStateと同じような状態管理
+まずはReduxについて調べて、質問があれば後藤さんに
+
+## 今後の展望
+Ghostの開発（React）
+API開発も視野に（高橋さんと連携）
+
+
+# ソースのリファクタリング
+
+・フォルダ構成、階層をつけsrc配下を整理する
+  音声ファイル、episodes.js、imgなどは、[dummy][audio]などの別フォルダに分けること！
+
+・同じソースを2度書かない
+重複チェックを関数にする
+
+```
+  const isDuplicate = (title) => {
+    if(title === currentEpisode[0].title){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const onClickPlay = () => {
+  
+    if(isPlay) { // 再生中にクリック
+      if(tracks[trackIndex].src !== currentEpisode[0].src) {
+        const changeTrack = async () => {
+          await new Promise((resolve) => {
+            setIsPlay(false); //pause
+            setTimeout(() => {
+              resolve(1);
+            }, 300);
+          });
+          const stopTrack = tracks[trackIndex];
+          stopTrack.playing = false;
+          console.log(stopTrack);
+          console.log(trackIndex);
+
+          // 重複チェック
+          if(isDuplicate(tracks.some(el => el.title))) {
+            const targetIndex = tracks.findIndex((v) => v.title === currentEpisode[0].title);
+            const currentTrack = tracks[targetIndex];
+            setTrackIndex(targetIndex);
+            currentTrack.playing = true;
+            setIsPlay(true);
+          } else {
+            const playTracks = [...currentEpisode, ...tracks];
+            setTracks(playTracks);
+            setTrackIndex(0);
+            const currentTrack = playTracks[0];
+            // console.log(currentTrack);
+            currentTrack.playing = true;
+            setIsPlay(true);
+          }
+        }
+        changeTrack();
+      }
+      currentEpisode.playing = true;
+
+    } else { //停止時にクリック
+      // 重複チェック
+      if(isDuplicate()) {
+        //  console.log("重複");
+        const targetIndex = tracks.findIndex((v) => v.title === currentEpisode[0].title );
+        const currentTrack = tracks[targetIndex];
+        setIsPlay(true);
+        currentTrack.playing = true;
+        currentEpisode.playing = true;
+        console.log("tracks " + tracks);
+
+      } else {
+        // console.log("重複なし");
+        const playTracks = [ ...currentEpisode, ...tracks ];
+        setTracks(playTracks);
+        setTrackIndex(0);
+
+        const currentTrack = playTracks[0];
+        setIsPlay(true);
+        currentTrack.playing = true;
+        currentEpisode.playing = true;
+      }
+    }
+  };
+
+```
