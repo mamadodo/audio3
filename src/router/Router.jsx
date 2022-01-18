@@ -2,7 +2,6 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Top } from "../components/Top";
 import { Program } from "../components/Program";
 import { Episode } from "../components/Episode";
-import { episodes } from "../components/episodes";
 
 
 export const Router = () => {

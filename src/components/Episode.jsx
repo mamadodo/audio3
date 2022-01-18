@@ -1,8 +1,9 @@
 import React, { useContext, memo } from "react";
 import { useLocation, Link } from "react-router-dom";
 // import { useParams } from "react-router"; 
-import programImg from "../radireki_thumbnail.jpeg";
+import programImg from "../img/radireki_thumbnail.jpeg";
 import { TrackContext } from "../providers/TrackProvider";
+import axios from "axios";
 
 export const Episode = memo(() => {
   // const { id } = useParams();
@@ -13,8 +14,25 @@ export const Episode = memo(() => {
   const {state} = useLocation(); // current episode
   const currentEpisode = [state];
   // console.log(currentEpisode);
+
+  // 効かない？？なぜ？？
+  // const isDuplicate = () => {
+  //   if(tracks.some(el => el.title) === currentEpisode[0].title){
+  //     console.log("true");
+  //     return true;
+  //   } else {
+  //     console.log("false");
+  //     return false;
+  //   }
+  // }
   
   const onClickAdd = () => {
+
+    const url ="https://api.json-generator.com/templates/I5NfzXC17m5f/data?access_token=6a76lvuqp3cwnx944w7p5w2e1mv7v7puos3rn15p";
+    axios.get(url).then((res) => {
+    console.log(res.data);
+    });
+  
 
     // 重複チェック
     if(tracks.some(el => el.title === currentEpisode[0].title)) {

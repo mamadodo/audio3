@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import programImg from "../radireki_thumbnail.jpeg";
-import { episodes } from "./episodes";
+import programImg from "../img/radireki_thumbnail.jpeg";
+// import { episodes } from "../dummy/episodes";
+import { ApiGetEpisodes } from "../dummy/ApiGetEpisodes";
 
 export const Program = () => {
+  const { apiEpisodes } = ApiGetEpisodes();
+  console.log(apiEpisodes);
   return (
     <>
       <div id="container" className="chl-mvContainer row700">
@@ -19,10 +22,10 @@ export const Program = () => {
 
       <div>
       <ul className="allContents-list">
-        {episodes.map((episode, index) => (
+        {apiEpisodes.map((episode, index) => (
 
         <li className="contentItem episodeContent" key={episode.epiNum}>
-          <Link to={episode.epiNum} state={ episodes[index] }>
+          <Link to={episode.epiNum} state={ apiEpisodes[index] }>
             <div className="content-inner1">
               <div className="content-text">
                 <div className="content-ttl-wrap">

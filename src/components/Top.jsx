@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import programImg from "../radireki_thumbnail.jpeg";
+import programImg from "../img/radireki_thumbnail.jpeg";
 
 export const Top = () => {
   return (
