@@ -16,15 +16,15 @@ export const Episode = memo(() => {
   // console.log(currentEpisode);
 
   // 効かない？？なぜ？？
-  // const isDuplicate = () => {
-  //   if(tracks.some(el => el.title) === currentEpisode[0].title){
-  //     console.log("true");
-  //     return true;
-  //   } else {
-  //     console.log("false");
-  //     return false;
-  //   }
-  // }
+  const isDuplicate = () => {
+    if(tracks.some(el => el.title === currentEpisode[0].title)){
+      console.log("true");
+      return true;
+    } else {
+      console.log("false");
+      return false;
+    }
+  }
   
   const onClickAdd = () => {
 
@@ -35,7 +35,7 @@ export const Episode = memo(() => {
   
 
     // 重複チェック
-    if(tracks.some(el => el.title === currentEpisode[0].title)) {
+    if(isDuplicate()) {
       //  console.log("重複");
     } else {
       // console.log("重複なし");
