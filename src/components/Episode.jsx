@@ -3,7 +3,6 @@ import { useLocation, Link } from "react-router-dom";
 // import { useParams } from "react-router"; 
 import programImg from "../img/radireki_thumbnail.jpeg";
 import { TrackContext } from "../providers/TrackProvider";
-import axios from "axios";
 
 export const Episode = memo(() => {
   // const { id } = useParams();
@@ -15,7 +14,6 @@ export const Episode = memo(() => {
   const currentEpisode = [state];
   // console.log(currentEpisode);
 
-  // 効かない？？なぜ？？
   const isDuplicate = () => {
     if(tracks.some(el => el.title === currentEpisode[0].title)){
       console.log("true");
@@ -25,15 +23,25 @@ export const Episode = memo(() => {
       return false;
     }
   }
+
+  const audioPlay = () => {
+    const targetIndex = tracks.findIndex((v) => v.title === currentEpisode[0].title);
+    const currentTrack = tracks[targetIndex];
+    setTrackIndex(targetIndex);
+    currentTrack.playing = true;
+    setIsPlay(true);
+  }
+
+  const audioPlayAdd = () => { //再生＋プレイリスト追加
+    const playTracks = [...currentEpisode, ...tracks];
+    setTracks(playTracks);
+    setTrackIndex(0);
+    const currentTrack = playTracks[0];
+    currentTrack.playing = true;
+    setIsPlay(true);
+  }
   
   const onClickAdd = () => {
-
-    const url ="https://api.json-generator.com/templates/I5NfzXC17m5f/data?access_token=6a76lvuqp3cwnx944w7p5w2e1mv7v7puos3rn15p";
-    axios.get(url).then((res) => {
-    console.log(res.data);
-    });
-  
-
     // 重複チェック
     if(isDuplicate()) {
       //  console.log("重複");
@@ -62,20 +70,10 @@ export const Episode = memo(() => {
           console.log(trackIndex);
 
           // 重複チェック
-          if(tracks.some(el => el.title === currentEpisode[0].title)) {
-            const targetIndex = tracks.findIndex((v) => v.title === currentEpisode[0].title);
-            const currentTrack = tracks[targetIndex];
-            setTrackIndex(targetIndex);
-            currentTrack.playing = true;
-            setIsPlay(true);
+          if(isDuplicate()) {
+            audioPlay();
           } else {
-            const playTracks = [...currentEpisode, ...tracks];
-            setTracks(playTracks);
-            setTrackIndex(0);
-            const currentTrack = playTracks[0];
-            // console.log(currentTrack);
-            currentTrack.playing = true;
-            setIsPlay(true);
+            audioPlayAdd();
           }
         }
         changeTrack();
@@ -84,24 +82,13 @@ export const Episode = memo(() => {
 
     } else { //停止時にクリック
       // 重複チェック
-      if(tracks.some(el => el.title === currentEpisode[0].title)) {
-        //  console.log("重複");
-        const targetIndex = tracks.findIndex((v) => v.title === currentEpisode[0].title );
-        const currentTrack = tracks[targetIndex];
-        setIsPlay(true);
-        currentTrack.playing = true;
+      if(isDuplicate()) {
+        audioPlay();
         currentEpisode.playing = true;
         console.log("tracks " + tracks);
 
       } else {
-        // console.log("重複なし");
-        const playTracks = [ ...currentEpisode, ...tracks ];
-        setTracks(playTracks);
-        setTrackIndex(0);
-
-        const currentTrack = playTracks[0];
-        setIsPlay(true);
-        currentTrack.playing = true;
+        audioPlayAdd();
         currentEpisode.playing = true;
       }
     }

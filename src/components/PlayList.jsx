@@ -13,6 +13,20 @@ export const PlayList = (props) => {
     newtracks.splice(e.currentTarget.id, 1);
     setTracks(newtracks);
   }
+
+  // pause audio
+  const pauseAudio = () => {
+    const prevTrack = tracks[trackIndex];
+    prevTrack.playing = false;
+  }
+
+  // play audio
+  const playAudio = (target) => {
+    const currentTrack = tracks[target];
+    currentTrack.playing = true;
+    setTrackIndex(target);
+    setIsPlay(true);  
+  }
   
   const onClickTrack = (e) => {
     // console.log("trackボタンクリック");
@@ -28,17 +42,11 @@ export const PlayList = (props) => {
             setTimeout(() => {
               resolve(1);
             }, 300);
-            const prevTrack = tracks[trackIndex];
-            prevTrack.playing = false;
-            console.log("prevTrack.playing" , prevTrack.playing);
+            pauseAudio();
           });
           // クリックしたトラックを再生
-          const currentTrack = tracks[newIndex];
-          currentTrack.playing = true;
-          // console.log(currentTrack);
+          playAudio(newIndex);
           console.log('次のトラック: ' + newIndex);
-          setTrackIndex(newIndex);
-          setIsPlay(true);
         }
         changeTrack();
       } else {
@@ -46,14 +54,10 @@ export const PlayList = (props) => {
 
         // 再生中のトラックを停止
         setIsPlay(false); //pause
-        const prevTrack = tracks[trackIndex];
-        prevTrack.playing = false;
+        pauseAudio();
       }
     } else {
-      setTrackIndex(e.currentTarget.id);
-      setIsPlay(true);
-      const currentTrack = tracks[e.currentTarget.id];
-      currentTrack.playing = true;
+      playAudio(e.currentTarget.id);
     }
   };
 
